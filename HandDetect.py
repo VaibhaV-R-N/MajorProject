@@ -20,7 +20,7 @@ t3 = Thread(target=gf.getValue)
 t3.start()
 
 while True:
-    _,img = vidSrc.read()
+    _,img = vidSrc.read()   
     cv.resizeWindow("videoCam",w,h)
     cv.flip(img,1)
     cv.cvtColor(img,cv.COLOR_BGR2RGB)
@@ -30,6 +30,7 @@ while True:
     state = hs.getState(result)
     # print(state)
     gesture = hs.stateToGesture(state)
+    # print(gesture)
     t1 = Thread(target=gf.gestureUpdater,args=[gesture])
    
     t1.start()

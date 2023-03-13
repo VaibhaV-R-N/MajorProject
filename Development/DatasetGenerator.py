@@ -2,13 +2,7 @@ import csv
 import cv2 as cv
 import mediapipe as mp
 from pynput import keyboard
-import numpy as np
 
-from keras.models import load_model
-from keras.models import Sequential
-from keras.layers import Dense
-
-model = load_model('model.h5')
 
 global results
 filename = "landmarkDataset.csv"
@@ -28,13 +22,14 @@ def writeToDataset(key):
                 writer.writerow([results.multi_hand_landmarks[0].landmark[i].x for i in range(21)]+[results.multi_hand_landmarks[0].landmark[i].y for i in range(21)]+[4])
             if key.char == '5':
                 writer.writerow([results.multi_hand_landmarks[0].landmark[i].x for i in range(21)]+[results.multi_hand_landmarks[0].landmark[i].y for i in range(21)]+[5])
-           
+            if key.char == '6':
+                writer.writerow([results.multi_hand_landmarks[0].landmark[i].x for i in range(21)]+[results.multi_hand_landmarks[0].landmark[i].y for i in range(21)]+[6])
     except Exception:
         print("error")
         pass
 
-# listener = keyboard.Listener(on_press=writeToDataset)
-# listener.start()
+listener = keyboard.Listener(on_press=writeToDataset)
+listener.start()
 
 
 
@@ -42,7 +37,7 @@ fields = []
 
 videoSrc = cv.VideoCapture(0)
 
-# cv.namedWindow("videoCam",cv.WINDOW_NORMAL)
+cv.namedWindow("videoCam",cv.WINDOW_NORMAL)
 
 mpHands = mp.solutions.hands
 Hands = mpHands.Hands(max_num_hands = 1)
@@ -64,13 +59,12 @@ while True:
     results = Hands.process(img)
 
     if results.multi_hand_landmarks:
-        # for landmarks in results.multi_hand_landmarks:
+        for landmarks in results.multi_hand_landmarks:
 
-        #     mpDraw.draw_landmarks(img,landmarks,mpHands.HAND_CONNECTIONS,mp_drawing_styles.get_default_hand_landmarks_style(),
-        #     mp_drawing_styles.get_default_hand_connections_style())
-        label = np.argmax(model.predict(np.array([results.multi_hand_landmarks[0].landmark[i].x for i in range(21)]+[results.multi_hand_landmarks[0].landmark[i].y for i in range(21)]).reshape(1,-1)),axis=1)
-        print(label)
-    # cv.imshow("videoCam",img)
+            mpDraw.draw_landmarks(img,landmarks,mpHands.HAND_CONNECTIONS,mp_drawing_styles.get_default_hand_landmarks_style(),
+            mp_drawing_styles.get_default_hand_connections_style())
+
+    cv.imshow("videoCam",img)
 
 
     if cv.waitKey(1) & 0xFF == ord('x'):

@@ -1,8 +1,8 @@
 {
-    "1": "notify-send notification one",
+    "1": "firefox",
     "2": "notify-send notification two",
     "3": "notify-send notification three",
     "4": "notify-send notification four",
-    "5": "notify-send notification five"
-
+    "5": "notify-send notification five",
+    "exec": "`"
 }

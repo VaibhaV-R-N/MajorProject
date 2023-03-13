@@ -24,15 +24,16 @@ class Utility():
 
     def predictGesture(self):
         try:
-            if  self.res.multi_hand_landmarks  and len(self.res.multi_hand_landmarks)  == 1:
+            if  self.res.multi_hand_landmarks  and (len(self.res.multi_hand_landmarks)  == 1):
                 data = []
                 model = load_model('model.h5')
                 data = [self.res.multi_hand_landmarks[0].landmark[i].x for i in range(21)]+[self.res.multi_hand_landmarks[0].landmark[i].y for i in range(21)]
                 data = np.array(data).reshape(1,-1)
-            
-                return np.argmax(model.predict(data),axis=1)[0]
-            
-            elif  self.res.multi_hand_landmarks and len(self.res.multi_hand_landmarks)  == 2:
-                return "exec"
+                y_pred = model.predict(data)
+                return int(np.argmax(y_pred,axis=1)[0])
+            else: return 0
         except Exception:
             pass
+    
+    def getResult(self):
+        return self.res

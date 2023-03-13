@@ -19,13 +19,13 @@ def getState(res):
 
 def stateToGesture(handState):
     gesture = 0
-    cont = 1
+    cont = True
     for i in range(1,5):
-        if handState[i] == 1 and cont == 1:
+        if handState[i] == 1 and cont:
             gesture += 1
-        if handState[i] == 0 and cont == 1:
-            cont = 0
-        if handState[i] == 1 and cont == 0:
+        if handState[i] == 0 and cont:
+            cont = False
+        if handState[i] == 1 and cont == False:
             return 0
             
     if gesture != 4 and handState[0] == 1:

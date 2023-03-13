@@ -10,13 +10,13 @@ class Handler():
             self.pyDict = json.loads(file.read())
 
     def updateCommands(self,commands):
-        for i,k in enumerate(self.pyDict.keys):
+        for i,k in enumerate(self.pyDict.keys()):
             self.pyDict[k] = commands[i]
         with open(self.filePath,"w") as file:
             file.write(json.dumps(self.pyDict,indent=4))
     
     def getCommand(self,gesture):
-        if gesture != 'exec':
+        if gesture not in ["0","6"]:
             self.updatePyDict()
             return self.pyDict[gesture]
     

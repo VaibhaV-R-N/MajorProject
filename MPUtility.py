@@ -13,6 +13,7 @@ class Utility():
         self.mp_drawing_styles = mp.solutions.drawing_styles
         self.startT2 = False
         self.created = False
+        self.nh.AEnabled=True
         self.notificationEvent = threading.Event()
      
     def draw(self,img):
@@ -27,7 +28,9 @@ class Utility():
         
         return self.img
 
-    def isRightHand(self):
+    def isRightHand(self,res=None):
+        if res:
+            self.res = res
         if str(self.res.multi_handedness[0].classification[0].label) == "Left":
             if not self.notificationEvent.is_set():
                 self.notificationEvent.set()
@@ -66,12 +69,12 @@ class Utility():
     def predictGesture(self):
         try:
             if  self.res.multi_hand_landmarks  and (len(self.res.multi_hand_landmarks)  == 1) and self.isRightHand() and self.isNotFlipped():
+
                 data = []
                 model = load_model('model.h5')
                 data = [self.res.multi_hand_landmarks[0].landmark[i].x for i in range(21)]+[self.res.multi_hand_landmarks[0].landmark[i].y for i in range(21)]
                 data = np.array(data).reshape(1,-1)
                 y_pred = model.predict(data)
-                print(self.created)
                 return int(np.argmax(y_pred,axis=1)[0])
             else:
                  

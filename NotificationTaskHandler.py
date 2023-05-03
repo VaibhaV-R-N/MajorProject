@@ -10,12 +10,12 @@ class NHandler:
         self.engine.setProperty('rate',150)
         self.voices = self.engine.getProperty('voices')
         self.engine.setProperty('voice','English (America, New York City)')
-        self.VEnabled = True
+        self.AEnabled = False
         self.NEnabled = True
 
     def voiceNotification(self,message):
         try:
-            if self.VEnabled:
+            if self.AEnabled:
                 self.engine.say(message)
                 self.engine.runAndWait()
         except Exception as e:
@@ -23,16 +23,19 @@ class NHandler:
             # print(e)
 
     def notify(self,message,title="Gesture",duration=1):
-        if (self.OS == "Linux") and (message != None) and self.NEnabled:
-            subprocess.run(["notify-send", "-t", str(duration),message])
+        if (self.OS == "Linux") and (message != None):
+            if self.NEnabled:
+                subprocess.run(["notify-send", "-t", str(duration),message])
             threading.Thread(target=self.voiceNotification,args=[message]).start()
 
-        elif (self.OS == "Windows") and (message != None) and self.NEnabled:
-            notification.notify(title=title,message=message)
+        if (self.OS == "Windows") and (message != None):
+            if self.NEnabled:
+                notification.notify(title=title,message=message)
             threading.Thread(target=self.voiceNotification,args=[message]).start()
     
     def exe(self,task):
         subprocess.run(task)
+        self.notify(title='task',message='completed!!',duration=10)
 
 # def __main__():
 #     h = NHandler()

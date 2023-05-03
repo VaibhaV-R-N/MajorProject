@@ -1,5 +1,4 @@
 import cv2 as cv
-import subprocess
 import time
 import HandState as hs
 import threading
@@ -23,14 +22,14 @@ class Ui_MainWindow(object):
         self.prevG = None
         self.buttoncss = "background-color:#FFED00;color:#000000;"
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 500)
+        MainWindow.resize(800, 600)
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         # self.centralwidget.setStyleSheet(
         #     "background-color:#000000;color:#FFED00;")
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(10, 10, 351, 390))
+        self.groupBox.setGeometry(QtCore.QRect(25, 25, 401, 440))
 
         self.groupBox.setAlignment(
             QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
@@ -38,14 +37,14 @@ class Ui_MainWindow(object):
         self.groupBox.setObjectName("groupBox")
 
         self.groupBox_3 = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox_3.setGeometry(QtCore.QRect(630, 320, 150, 150))
+        self.groupBox_3.setGeometry(QtCore.QRect(725, 335, 150, 150))
         self.groupBox_3.setAlignment(
             QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.groupBox_3.setFlat(False)
         self.groupBox_3.setTitle("Gesture")
 
         self.verticalLayoutWidget = QtWidgets.QWidget(self.groupBox)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(9, 9, 51, 310))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(20, 42, 51, 310))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -67,7 +66,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.label_2)
 
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.groupBox)
-        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(59, 9, 291, 320))
+        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(90, 42, 291, 320))
         self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(
             self.verticalLayoutWidget_2)
@@ -90,47 +89,63 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.t5)
         self.execKeyLabel = QtWidgets.QLabel(self.groupBox)
         self.execKeyLabel.setText("ExeKey : ")
-        self.execKeyLabel.setGeometry(QtCore.QRect(10, 340, 100, 41))
+        self.execKeyLabel.setGeometry(QtCore.QRect(20, 390, 100, 41))
         self.t6 = QtWidgets.QTextEdit(self.groupBox)
-        self.t6.setGeometry(QtCore.QRect(60, 340, 60, 41))
+        self.t6.setGeometry(QtCore.QRect(90, 390, 60, 41))
         self.update = QtWidgets.QPushButton(self.groupBox)
         self.update.setText("Update")
-        self.update.setGeometry(QtCore.QRect(245, 340, 101, 41))
+        self.update.setGeometry(QtCore.QRect(280, 390, 101, 41))
         self.update.clicked.connect(self.updateConfig)
-        # self.update.setStyleSheet(self.buttoncss)
+        self.update.setStyleSheet(self.buttoncss)
 
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox.setGeometry(QtCore.QRect(80, 430, 171, 41))
+        self.comboBox.setGeometry(QtCore.QRect(105, 530, 171, 41))
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
+        self.comboBox.setStyleSheet(self.buttoncss)
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
-        self.label_6.setGeometry(QtCore.QRect(20, 440, 57, 16))
+        self.label_6.setGeometry(QtCore.QRect(45, 540, 57, 16))
         self.label_6.setObjectName("label_6")
         self.groupBox_2 = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox_2.setGeometry(QtCore.QRect(400, 10, 391, 291))
+        self.groupBox_2.setGeometry(QtCore.QRect(485, 25, 391, 291))
         self.groupBox_2.setObjectName("groupBox_2")
         self.videocam = QtWidgets.QLabel(self.groupBox_2)
-        self.videocam.setGeometry(QtCore.QRect(16, 25, 361, 251))
+        self.videocam.setGeometry(QtCore.QRect(16, 29, 361, 251))
         self.videocam.setText("")
         self.videocam.setPixmap(QtGui.QPixmap("index.png"))
         self.videocam.setScaledContents(True)
         self.videocam.setObjectName("videocam")
         self.start = QtWidgets.QPushButton(self.centralwidget)
-        self.start.setGeometry(QtCore.QRect(400, 330, 101, 41))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.start.setFont(font)
+        self.start.setGeometry(QtCore.QRect(485, 345, 101, 41))
+        self.font = QtGui.QFont()
+        self.font.setPointSize(10)
+        self.start.setFont(self.font)
         self.start.setObjectName("start")
         self.start.clicked.connect(self.startF)
         self.start.setStyleSheet(self.buttoncss)
 
         self.stop = QtWidgets.QPushButton(self.centralwidget)
         self.stop.setText("stop")
-        self.stop.setGeometry(QtCore.QRect(505, 330, 101, 41))
+        self.stop.setFont(self.font)
+        self.stop.setGeometry(QtCore.QRect(590, 345, 101, 41))
         self.stop.clicked.connect(self.stopF)
         self.stop.setEnabled(False)
         self.stop.setStyleSheet(self.buttoncss)
+
+        self.audio = QtWidgets.QPushButton(self.centralwidget)
+        self.audio.setText("Audio:ON")
+        self.audio.setFont(self.font)
+        self.audio.setGeometry(QtCore.QRect(355, 530, 71, 41))
+        self.audio.clicked.connect(self.toggleAudio)
+        self.audio.setStyleSheet(self.buttoncss)
+
+        self.notification = QtWidgets.QPushButton(self.centralwidget)
+        self.notification.setText("Notify:OFF")
+        self.notification.setFont(self.font)
+        self.notification.setGeometry(QtCore.QRect(280, 530, 71, 41))
+        self.notification.clicked.connect(self.toggleNotification)
+        self.notification.setStyleSheet(self.buttoncss)
 
         self.label_8 = QtWidgets.QLabel(self.groupBox_3)
         self.label_8.setGeometry(QtCore.QRect(50, 1, 145, 145))
@@ -159,7 +174,7 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "FIve :"))
         self.comboBox.setItemText(0, _translate(
             "MainWindow", "ANN (Recommended)"))
-        self.comboBox.setItemText(1, _translate("MainWindow", "ALGO"))
+        self.comboBox.setItemText(1, _translate("MainWindow", "SFCCA"))
         self.label_6.setText(_translate("MainWindow", "Model : "))
         self.groupBox_2.setTitle(_translate("MainWindow", "VideoCam"))
         self.start.setText(_translate("MainWindow", "Start"))
@@ -206,18 +221,18 @@ class Ui_MainWindow(object):
 
                     elif self.model == "ALGO":
                         gesture = hs.stateToGesture(
-                            hs.getState(self.ut.getResult()))
+                            hs.getState(self.ut.getResult(),self.state['stop']))
 
                     if gesture not in [0, 6, None]:
                         if self.prevG == None:
                             self.prevG = gesture
-                            self.nh.notify(f"Gesture = {self.prevG}")
+                            self.nh.notify(f"Gesture is {self.prevG}")
                             # subprocess.run(
                             #     ["notify-send", "-t", "1", ])
                         self.gesture = gesture
                         self.label_8.setText(str(gesture))
                         if self.prevG != self.gesture:
-                            self.nh.notify(f"Gesture = {self.gesture}")
+                            self.nh.notify(f"Gesture is {self.gesture}")
                             # subprocess.run(
                             #     ["notify-send", "-t", "1", f"Gesture = {self.gesture}"])
                             self.prevG = self.gesture
@@ -268,10 +283,35 @@ class Ui_MainWindow(object):
         self.setFalse("stop")
         self.exitEvent.set()
         self.ut.notificationEvent.set()
+        hs.setNotificationEvent()
         self.start.setEnabled(True)
         self.comboBox.setEnabled(True)
         self.update.setEnabled(True)
         self.stop.setEnabled(False)
+
+    def toggleAudio(self):
+       if self.nh.AEnabled:
+           self.nh.AEnabled = False
+        #    self.ut.nh.AEnabled = False
+           self.audio.setText("Audio:ON")
+           return
+       self.nh.AEnabled = True
+    #    self.ut.nh.AEnabled = True
+
+       self.audio.setText("Audio:OFF")
+    
+    def toggleNotification(self):
+        if self.nh.NEnabled:
+            self.nh.NEnabled = False
+            # self.ut.nh.NEnabled = False
+
+            self.notification.setText("Notify:ON")
+            return
+        self.nh.NEnabled = True
+        # self.ut.nh.NEnabled = True
+
+        self.notification.setText("Notify:OFF")
+        
 
     def execF(self, key):
 
@@ -302,7 +342,7 @@ if __name__ == "__main__":
     from pynput import keyboard
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    MainWindow.setFixedSize(800, 500)
+    MainWindow.setFixedSize(900, 600)
     ui = Ui_MainWindow()
 
     ui.setupUi(MainWindow)

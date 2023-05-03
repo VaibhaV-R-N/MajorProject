@@ -4,7 +4,7 @@ class Handler():
         self.filePath = "config.json"
         self.pyDict = {}
         self.updatePyDict()
-    
+   
     def updatePyDict(self):
         with open(self.filePath,"r") as file:
             self.pyDict = json.loads(file.read())

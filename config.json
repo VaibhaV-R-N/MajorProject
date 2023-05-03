@@ -1,8 +1,8 @@
 {
-    "1": "firefox -new-tab  https://www.google.com",
-    "2": "notify-send notification two",
-    "3": "notify-send notification three",
-    "4": "notify-send notification four",
+    "1": "firefox -new-tab  https://www.google.com https://www.youtube.com https://www.wallhaven.cc",
+    "2": "wific r",
+    "3": "/home/vaibhav/important/Programming/unix/Anie/aniLite.sh",
+    "4": "python WallpaperScript.py",
     "5": "notify-send notification five",
     "exec": "`"
 }

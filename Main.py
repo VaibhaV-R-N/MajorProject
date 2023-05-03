@@ -267,7 +267,7 @@ class Ui_MainWindow(object):
         self.state["stop"] = True
         self.setFalse("stop")
         self.exitEvent.set()
-
+        self.ut.notificationEvent.set()
         self.start.setEnabled(True)
         self.comboBox.setEnabled(True)
         self.update.setEnabled(True)

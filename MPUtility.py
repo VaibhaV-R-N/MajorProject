@@ -46,6 +46,7 @@ class Utility():
             if not self.notificationEvent.is_set():
                 self.notificationEvent.set()
             return True
+        self.notificationEvent.clear()
         if not self.created:
             threading.Thread(target=self.orientationNotification,args=["Invalid Hand Orientation!"]).start()
         return False
@@ -64,7 +65,6 @@ class Utility():
 
     def predictGesture(self):
         try:
-            print(self.created,self.notificationEvent.is_set())
             if  self.res.multi_hand_landmarks  and (len(self.res.multi_hand_landmarks)  == 1) and self.isRightHand() and self.isNotFlipped():
                 data = []
                 model = load_model('model.h5')
@@ -77,8 +77,8 @@ class Utility():
                  
                 return 0
         except Exception as e:
-            # pass
-            print(e)
+            pass
+            # print(e)
     
     def getResult(self):
         return self.res

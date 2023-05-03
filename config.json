@@ -1,5 +1,5 @@
 {
-    "1": "firefox",
+    "1": "firefox -new-tab  https://www.google.com",
     "2": "notify-send notification two",
     "3": "notify-send notification three",
     "4": "notify-send notification four",

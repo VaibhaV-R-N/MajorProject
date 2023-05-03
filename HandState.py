@@ -2,12 +2,13 @@
 tip = [4,8,12,16,20]
 #base = 5 5 9 13 17
 base = [5,5,9,13,17]
-
+from MPUtility import Utility
+mpu = Utility()
 
 def getState(res):
     handState = [0,0,0,0,0]
    
-    if res.multi_hand_landmarks and len(res.multi_hand_landmarks ) == 1:
+    if res.multi_hand_landmarks and (len(res.multi_hand_landmarks ) == 1) and mpu.isRightHand() and mpu.isNotFlipped() :
         for landmarks in res.multi_hand_landmarks:
             if landmarks.landmark[tip[0]].x > landmarks.landmark[base[0]].x:
                 handState[0] = 1

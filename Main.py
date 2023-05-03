@@ -8,11 +8,12 @@ from threading import Thread
 from PyQt5.QtGui import QImage, QPixmap
 from MPUtility import Utility
 from ConfigHandler import Handler 
-
+from NotificationTaskHandler import NHandler
 
 class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
+        self.nh = NHandler()
         self.ut = Utility()
         self.state = {"stop": True,
                       "start": False
@@ -190,7 +191,7 @@ class Ui_MainWindow(object):
                 break
 
             else:
-                time.sleep(1)
+                time.sleep(3)
 
     def updateGesture(self):
 
@@ -210,13 +211,15 @@ class Ui_MainWindow(object):
                     if gesture not in [0, 6, None]:
                         if self.prevG == None:
                             self.prevG = gesture
-                            subprocess.run(
-                                ["notify-send", "-t", "1", f"Gesture = {self.gesture}"])
+                            self.nh.notify(f"Gesture = {self.prevG}")
+                            # subprocess.run(
+                            #     ["notify-send", "-t", "1", ])
                         self.gesture = gesture
                         self.label_8.setText(str(gesture))
                         if self.prevG != self.gesture:
-                            subprocess.run(
-                                ["notify-send", "-t", "1", f"Gesture = {self.gesture}"])
+                            self.nh.notify(f"Gesture = {self.gesture}")
+                            # subprocess.run(
+                            #     ["notify-send", "-t", "1", f"Gesture = {self.gesture}"])
                             self.prevG = self.gesture
 
                     else:
@@ -226,7 +229,7 @@ class Ui_MainWindow(object):
                 break
 
             else:
-                time.sleep(1)
+                time.sleep(3)
 
     def updateConfig(self):
 
@@ -234,7 +237,8 @@ class Ui_MainWindow(object):
         for t in self.tList:
             commands.append(str(t.toPlainText()))
         self.cHandler.updateCommands(commands)
-        subprocess.run(['notify-send', 'Config Updated Successfully'])
+        self.nh.notify("Config Updated Successfully")
+        # subprocess.run(['notify-send', 'Config Updated Successfully'])
 
     def setFalse(self, state):
 
@@ -272,19 +276,22 @@ class Ui_MainWindow(object):
     def execF(self, key):
 
         try:
+            
             if key.char == self.cHandler.getCommand("exec"):
+                self.nh.notify(message="Executing...",duration=3)
                 cmd = self.cHandler.getCommand(str(self.gesture))
                 if cmd != "":
                     cmd = cmd.split(" ")
-                    subprocess.run(cmd)
+                    Thread(target=self.nh.exe,args=[cmd]).start()
+                   
 
         except AttributeError:
             if key.name == self.cHandler.getCommand("exec"):
+                self.nh.notify(message="Executing...",duration=3)
                 cmd = self.cHandler.getCommand(str(self.gesture))
-                print(cmd)
                 if cmd != "":
                     cmd = cmd.split(" ")
-                    subprocess.run(cmd)
+                    Thread(target=self.nh.exe,args=[cmd]).start()
 
         except Exception:
             pass

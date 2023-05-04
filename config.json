@@ -1,8 +1,8 @@
 {
-    "1": "firefox -new-tab  https://www.google.com https://www.youtube.com https://www.wallhaven.cc",
-    "2": "wific r",
+    "1": "firefox -new-tab  https://www.google.com https://www.youtube.com https://www.wallhaven.cc https://www.opindia.com/latest-news/",
+    "2": "python NodeProjectTemplate.py",
     "3": "/home/vaibhav/important/Programming/unix/Anie/aniLite.sh",
     "4": "python WallpaperScript.py",
-    "5": "notify-send notification five",
+    "5": "python NewsScript.py",
     "exec": "`"
 }

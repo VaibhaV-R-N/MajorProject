@@ -219,7 +219,7 @@ class Ui_MainWindow(object):
                     if self.model == "ANN (Recommended)":
                         gesture = self.ut.predictGesture()
 
-                    elif self.model == "ALGO":
+                    elif self.model == "SFCCA":
                         gesture = hs.stateToGesture(
                             hs.getState(self.ut.getResult(),self.state['stop']))
 
@@ -276,6 +276,8 @@ class Ui_MainWindow(object):
         self.start.setEnabled(False)
         self.comboBox.setEnabled(False)
         self.update.setEnabled(False)
+        self.audio.setEnabled(False)
+        self.notification.setEnabled(False)
 
     def stopF(self):
 
@@ -288,6 +290,8 @@ class Ui_MainWindow(object):
         self.comboBox.setEnabled(True)
         self.update.setEnabled(True)
         self.stop.setEnabled(False)
+        self.audio.setEnabled(True)
+        self.notification.setEnabled(True)
 
     def toggleAudio(self):
        if self.nh.AEnabled:

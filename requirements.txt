@@ -1,0 +1,9 @@
+mediapipe
+keras
+tensorflow
+pyqt5
+pynput
+numpy
+pandas
+plyer
+python-opencv-headless
